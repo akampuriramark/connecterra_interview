@@ -29,7 +29,10 @@ namespace connecterra_assessement.Logic
 
         public void MergeIntervals(List<FileInput> intervals, int mergeDistance)
         {
-
+            if (intervals.Count == 0)
+            {
+                return;
+            }
             if (intervals.Count == 1)
             {
                 result.Add(new int[] { intervals[0].Start, intervals[0].End });
@@ -45,13 +48,13 @@ namespace connecterra_assessement.Logic
                     {
                         AddInterval(intervals[i], mergeDistance);
                     }
-                    else if (intervals[i].Action.Equals("DELETED", StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        DeleteInterval(result, new int[] { intervals[i].Start, intervals[i].End });
-                    }
                     else if (intervals[i].Action.Equals("REMOVED", StringComparison.CurrentCultureIgnoreCase))
                     {
                         RemoveInterval(intervals, intervals[i], mergeDistance);
+                    }
+                    else if (intervals[i].Action.Equals("DELETED", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        DeleteInterval(result, new int[] { intervals[i].Start, intervals[i].End });
                     }
                     else
                     {
